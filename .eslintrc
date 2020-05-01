@@ -1,0 +1,7 @@
+{
+  "extends": ["react-app"],
+  // 禁用所有规则
+  // "space-before-function-paren":"off",
+  "rules": {
+  }
+}
