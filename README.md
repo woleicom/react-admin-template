@@ -30,6 +30,7 @@ npm run start:mock
 - 集成i18n国际化（使用react-intl集成国际化，导航头切换语言，首页查看效果）
 
 ### 开发中兼容性
+- 兼容IE10、11默认关闭（通过注释src/index.js、.babelrc、.browserslistrc配置）
 - 兼容到IE11（通过babel兼容）
 - 兼容到IE10（pulic/index.html注释需要打开，因为在开发过程中create-react-app引入了一个只针对node环境的颜料库，导致在IE10中缺少相关函数对象，需要在全局静态配置polyfill，而在src中引入无效，如果只需要生产环境支持，则不需要，打包后会自动过滤掉，html中也根据是否development进行判断了）
 ### 相关命令

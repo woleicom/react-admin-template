@@ -1,12 +1,12 @@
 {
   "presets": [
-    "react-app",
-    [
+    "react-app"
+    //兼容IE10、11
+    /* [
       "@babel/preset-env",
       {
         "useBuiltIns": "usage",
         "corejs": { "version": 3 },
-        //兼容IE10、11
         "targets": {
           "ie":10
         },
@@ -17,7 +17,7 @@
           "es.weak-map"
         ]
       }
-    ]
+    ] */
   ],
   "plugins": [
     ["@babel/plugin-proposal-class-properties", { "loose": true }],
