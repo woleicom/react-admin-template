@@ -1,16 +1,12 @@
 {
   "name": "react-admin-template",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": {
     "name": "月下独奏",
     "email": "572962673@qq.com"
   },
   "private": true,
   "dependencies": {
-    "@babel/plugin-transform-spread": "^7.8.3",
-    "@babel/polyfill": "^7.8.7",
-    "@babel/preset-env": "^7.9.5",
-    "@babel/runtime-corejs3": "^7.9.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
@@ -42,9 +38,6 @@
     "compressing": "^1.5.0",
     "del": "^5.1.0",
     "dotenv": "^8.2.0",
-    "koa": "^2.11.0",
-    "koa-bodyparser": "^4.3.0",
-    "koa-router": "^8.0.8",
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "moment": "^2.24.0",
@@ -54,9 +47,7 @@
     "webpackbar": "^4.0.0"
   },
   "scripts": {
-    "start:mock": "npm run start && node ./mock",
     "start": "rescripts start",
-    "mock": "node ./mock",
     "build": "rescripts build",
     "build:stag": "rescripts build --mode staging",
     "test": "rescripts test  --env=jsdom",

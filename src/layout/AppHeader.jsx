@@ -5,6 +5,7 @@ import { GlobalOutlined,ArrowsAltOutlined,ShrinkOutlined, EditOutlined, LogoutOu
 import HeaderBreadcrumb from './HeaderBreadcrumb';
 import screenfull from 'screenfull';
 import {langKeys} from '@/lang'
+console.log(langKeys)
 const { Header } = Layout
 
 const AppHeader = props => {
@@ -63,6 +64,7 @@ const AppHeader = props => {
                         overlay={(
                             <Menu>
                                 {langKeys.map(v=><Menu.Item 
+                                    key={v.value}
                                     disabled={props.language === v.value} 
                                     onClick={()=>{toggleLanguageChange(v.value)}}
                                 >{v.label}</Menu.Item>)}
