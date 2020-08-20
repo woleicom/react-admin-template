@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const dotenv = require('dotenv');
-const {appendWebpackPlugin} = require('@rescripts/utilities');
+const {appendWebpackPlugin,getPaths, edit} = require('@rescripts/utilities');
 const WebpackBar = require('webpackbar');
 const WebpackEnd = require('./plugins/webpack.end.js');
 const resolve = dir => path.resolve(__dirname, dir);
@@ -52,17 +52,53 @@ const webpackResolveAlias = config => {
   };
   return config;
 }
+const useAntd = (config) => {
+  const styleLoaders = getPaths(
+    // Styleloaders are in config.module.rules inside an object only containing the "oneOf" prop
+    (inQuestion) => inQuestion && !!inQuestion.oneOf,
+    config
+  )
+  edit(
+    (section) => {
+      const loaders = section.oneOf
+      // New style loaders should be added near the end of loaders, but before file-loader
+      const fileLoaderIndex = loaders.findIndex(section => section.loader && section.loader.includes('file-loader'))
+      const lessLoader = {
+        test: /\.less$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'less-loader',
+            options: {
+              lessOptions: {
+                // sourceMap: NODE_ENV === 'production' && GENERATE_SOURCEMAP !== 'false',
+                javascriptEnabled: true,
+                modifyVars: theme || {}
+              }
+            }
+          }
+        ]
+      }
+      loaders.splice(fileLoaderIndex, 0, lessLoader)
+      return section
+    },
+    styleLoaders,
+    config
+  )
+  return config
+}
 let configArray = [
   ["use-eslint-config", ".eslintrc"],
   // Required for antd"s tree shaking babel-plugin-import
   ["use-babel-config", ".babelrc"],
   ['use-postcss-config'],
   // Provide a theme object based on this file
-  ["use-antd", { theme }],
+  // ["use-antd", { theme }],
+  useAntd,
   webpackBarPlugin,
   webpackResolveAlias,
-  webpackDotEnvPlugin,
-  logConfig,
+  webpackDotEnvPlugin
 ]
 if(getMode() === 'production') {
   configArray.push(webpackEndConfig);

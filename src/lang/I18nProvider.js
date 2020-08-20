@@ -7,8 +7,8 @@ import antd_en_US from 'antd/es/locale/en_US'
 import antd_zh_CN from 'antd/es/locale/zh_CN'
 // react-intel本地语言及其polyfill
 import '@formatjs/intl-relativetimeformat/polyfill'
-import '@formatjs/intl-relativetimeformat/dist/locale-data/en'
-import '@formatjs/intl-relativetimeformat/dist/locale-data/zh'
+import '@formatjs/intl-relativetimeformat/locale-data/en'
+import '@formatjs/intl-relativetimeformat/locale-data/zh'
 
 // 业务自定义语言
 import en_US from './en_US'
