@@ -65,7 +65,6 @@ class Demo1 extends Component {
   }
   pageInitState = ()=>{
     let pageState = getPageState(this.props.history.location.pathname);
-    console.log(pageState);
     if(pageState) {
       this.setState({
         name:pageState.name
@@ -82,7 +81,7 @@ class Demo1 extends Component {
     return (
       <Layout className='index animated fadeIn'>
         <Card>
-          <Input value={this.state.name} onChange={(e)=>{this.setState({name:e.target.value})}} placeholder="测试输入框" />
+          <Input style={{width:'180px'}} value={this.state.name} onChange={(e)=>{this.setState({name:e.target.value})}} placeholder="测试输入框" />
           <Table columns={this.state.columns} dataSource={this.state.data} />
         </Card>
       </Layout>

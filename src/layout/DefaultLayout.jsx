@@ -25,7 +25,7 @@ const reducer = (state, action) => {
       return state
   }
 };
-
+//转化当前用户导航菜单权限tree为一维数组list
 const getMenuList = (menuTree,menuList) => {
   for(let i = 0; i< menuTree.length; i++){
     menuList.push(menuTree[i]);
@@ -34,6 +34,7 @@ const getMenuList = (menuTree,menuList) => {
     }
   }
 };
+//获取当前用户所有可以访问的路由权限
 const getRoutes = (routeList,menuTree) => {
   let menuList =[];
   getMenuList(menuTree,menuList);
@@ -42,15 +43,19 @@ const getRoutes = (routeList,menuTree) => {
     return route?route:false;
   }).filter(v=>!!v);
 };
-
+//返回除了首页之外的面包屑
 const getBreadCrumb = (pathname,menuTree,crumb) => {
+  // 首页返回false
   if(pathname === '/index') return false;
+  // 递归遍历远端导航菜单tree
   for(let i = 0; i< menuTree.length; i++){
+    // 符合则添加到面包屑中
     if(pathname.search(menuTree[i].key) === 0){
       if(menuTree[i].key === pathname){
         crumb.unshift(menuTree[i].title);
         return true;
       }else {
+        // 不符合如果有子集继续查找
         if(menuTree[i].subs && menuTree[i].subs.length>0){
           let state = getBreadCrumb(pathname, menuTree[i].subs, crumb);
           if(state){
@@ -71,6 +76,7 @@ const DefaultLayout = props => {
   if (props.userInfo.id === undefined) {
     return <Redirect to='/login' {...props} />
   }
+  // 获取远端用户菜单权限tree
   const menu = JSON.parse(JSON.stringify(props.userInfo.menus));
 
   const menuClick = () => {
@@ -89,8 +95,10 @@ const DefaultLayout = props => {
       props.history.push('/login');
     }
   };
+  // 获取面包屑
   let breadCrumb = [];
   getBreadCrumb(props.location.pathname,menu,breadCrumb);
+  // 获取权限路由
   let routesMap = getRoutes(routes,menu);
   return (
     <Layout className='app'>

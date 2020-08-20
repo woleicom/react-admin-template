@@ -6,7 +6,7 @@ const Index = (props) => {
   return (
     <Layout className='index animated fadeIn'>
       {t('welcome')}
-      <DatePicker/>
+      <DatePicker style={{width:'200px'}}/>
     </Layout>
   )
 };
