@@ -1,94 +1,137 @@
-import React,{Component} from 'react'
-import {Layout,Table,Card,Input,Button} from 'antd'
+import React,{ useRef, useState, useEffect} from 'react'
+import {Layout,Table,Card,Input,Form,Button,Pagination} from 'antd'
 import {withRouter} from 'react-router-dom';
 import {setPageState,getPageState} from '@/utils/pageState'
-class Demo1 extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      name: '',
-      columns:[
-        {
-          title: 'Name',
-          dataIndex: 'name',
-          key: 'name',
-        },
-        {
-          title: 'Age',
-          dataIndex: 'age',
-          key: 'age',
-        },
-        {
-          title: 'Address',
-          dataIndex: 'address',
-          key: 'address',
-        },
-        {
-          title: 'Action',
-          key: 'action',
-          render: (text, record) => (
-            <span>
-               <Button type="link" onClick={this.pageLinkChange} block>详情</Button>
-            </span>
-          ),
-        },
-      ],
-      data:[
-        {
-          key: '1',
-          name: 'John Brown',
-          age: 32,
-          address: 'New York No. 1 Lake Park',
-          tags: ['nice', 'developer'],
-        },
-        {
-          key: '2',
-          name: 'Jim Green',
-          age: 42,
-          address: 'London No. 1 Lake Park',
-          tags: ['loser'],
-        },
-        {
-          key: '3',
-          name: 'Joe Black',
-          age: 32,
-          address: 'Sidney No. 1 Lake Park',
-          tags: ['cool', 'teacher'],
-        },
-      ]
-    }
-    
-  }
+import addModal from './AddModal'
 
-  componentWillMount(){
-    this.pageInitState();
+const Demo = (props)=>{
+  console.log('init...');
+  // 初始化默认筛选项数值
+  let defSearch = {
+    name1: '',
+    name2:'',
+    page: 1,
+    size: 10
   }
-  pageInitState = ()=>{
-    let pageState = getPageState(this.props.history.location.pathname);
-    if(pageState) {
-      this.setState({
-        name:pageState.name
+  let form = useRef();
+  // 初始化 分页信息和筛选项信息
+  let [total, setTotal] = useState(100);
+  let [search,setSearch] = useState(defSearch);
+  // 查看是否有留存状态，有则替换
+  let pageState = getPageState(props.history.location.pathname);
+  if(pageState) {
+    setSearch(Object.assign(search, pageState));
+  }
+  let [data, setData] = useState([])
+  let columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: '姓名',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: '年龄',
+      dataIndex: 'age',
+      key: 'age',
+    },
+    {
+      title: '地址',
+      dataIndex: 'address',
+      key: 'address',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (text, record) => (
+        <span>
+           <Button type="link" onClick={pageLinkChange} block>详情</Button>
+        </span>
+      ),
+    },
+  ]
+  const pageLinkChange = ()=>{
+    setPageState(props.history.location.pathname,{...search})
+    props.history.push({ pathname : '/demo/demo1/detail' });
+  }
+  const pageSearchChange = (data) => {
+    setSearch({...search, ...data, page: 1})
+  }
+  const pageSearchReset = () => {
+    form.current.setFields(Object.keys(defSearch).map(v=>({name:v, value: defSearch[v]})));
+    setSearch({...defSearch, page: 1, size: search.size});
+  }
+  const pageCurrentChange = (page, pageSize) => {
+    setSearch({...search, page: page});
+  } 
+  const pageSizeChange = (current, size) => {
+    setSearch({...search, page: 1, page: size});
+  }
+  const actionAddModel = ()=>{
+    addModal({title: '添加'}).then(((res)=>{
+      if (res) {
+        res.id = data.length;
+        setData([res,...data])
+      }
+    }))
+  }
+  const initData = () => {
+    console.log(search);
+    let d = [];
+    for(let i=(search.size*(search.page-1)+1);i<search.page*search.size;i++){
+      d.push( {
+        id: i,
+        name: 'John Brown',
+        age: 32,
+        address: 'New York No. 1 Lake Park',
+        tags: ['nice', 'developer'],
       })
     }
+    setData(d);
+    setTotal(200);
   }
-  pageLinkChange = ()=>{
-    setPageState(this.props.history.location.pathname,{
-      name:this.state.name
-    })
-    this.props.history.push({ pathname : '/demo/demo1/detail' });
-  }
-  render() {
-    return (
-      <Layout className='index animated fadeIn'>
-        <Card>
-          <Input style={{width:'180px'}} value={this.state.name} onChange={(e)=>{this.setState({name:e.target.value})}} placeholder="测试输入框" />
-          <Table columns={this.state.columns} dataSource={this.state.data} />
-        </Card>
-      </Layout>
-    )
-  }
-};
-const Demo = (props) => {
-  return <Demo1 {...props}></Demo1>
+  useEffect(()=>{
+    initData();
+  },[search])
+  return (
+    <Layout className='index animated fadeIn'>
+      <Card>
+        <div style={{'textAlign':'right'}}>
+          <Button type="danger" onClick={actionAddModel}>添加</Button>
+        </div>
+        <Form
+          ref={form}
+          style={{'marginBottom':'10px'}}
+          initialValues={search}
+          onFinish={pageSearchChange}
+          layout='inline'>
+          <Form.Item label="筛选项1" name='name1'>
+            <Input style={{width:'180px'}} placeholder="测试输入框" />
+          </Form.Item>
+          <Form.Item label="筛选项2" name='name2'>
+            <Input style={{width:'180px'}} placeholder="测试输入框" />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType='submit'>搜索</Button>
+          </Form.Item>
+          <Form.Item>
+            <Button type="default" onClick={pageSearchReset}>重置</Button>
+          </Form.Item>
+        </Form>
+        <Table pagination={false} bordered rowKey='id' columns={columns} dataSource={data} />
+        <Pagination style={{marginTop:'10px',textAlign:'right'}} 
+          showQuickJumper 
+          current={search.page} 
+          pageSize={search.size} 
+          total={total} 
+          onChange={pageCurrentChange} 
+          onShowSizeChange={pageSizeChange} />
+      </Card>
+    </Layout>
+  )
 }
 export default withRouter(Demo);
