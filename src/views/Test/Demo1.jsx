@@ -22,6 +22,7 @@ const Demo = (props)=>{
   if(pageState) {
     setSearch(Object.assign(search, pageState));
   }
+  // 列表数据和列头配置
   let [data, setData] = useState([])
   let columns = [
     {
@@ -54,23 +55,29 @@ const Demo = (props)=>{
       ),
     },
   ]
+  // 页面跳转
   const pageLinkChange = ()=>{
     setPageState(props.history.location.pathname,{...search})
     props.history.push({ pathname : '/demo/demo1/detail' });
   }
+  // 页面筛选项搜索
   const pageSearchChange = (data) => {
     setSearch({...search, ...data, page: 1})
   }
+  // 页面筛选项重置
   const pageSearchReset = () => {
     form.current.setFields(Object.keys(defSearch).map(v=>({name:v, value: defSearch[v]})));
     setSearch({...defSearch, page: 1, size: search.size});
   }
+  // 分页当前页切换
   const pageCurrentChange = (page, pageSize) => {
     setSearch({...search, page: page});
   } 
+  // 分页当前页显示多少条切换
   const pageSizeChange = (current, size) => {
     setSearch({...search, page: 1, page: size});
   }
+  // 增加列表项模态框添加
   const actionAddModel = ()=>{
     addModal({title: '添加'}).then(((res)=>{
       if (res) {
@@ -79,6 +86,7 @@ const Demo = (props)=>{
       }
     }))
   }
+  // 初始化数据
   const initData = () => {
     console.log(search);
     let d = [];
