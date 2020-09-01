@@ -6,6 +6,7 @@
     "email": "572962673@qq.com"
   },
   "private": true,
+  "homepage":"",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.3",
     "@testing-library/react": "^10.4.8",
