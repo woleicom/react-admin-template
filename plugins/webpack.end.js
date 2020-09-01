@@ -1,8 +1,6 @@
 const compressing = require('compressing');
-const path = require('path');
 const moment = require('moment');
 const del = require('del');
-const dirBuild = 'build';
 let delDist = async (dir) => {
   try {
     await del([dir]);
