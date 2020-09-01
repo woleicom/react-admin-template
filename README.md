@@ -20,8 +20,6 @@
 - 集成antd并可自定义theme
 - UI参考antd admin pro(并不太喜欢antd admin pro脚手架，但是样式没得说，很漂亮)
 - 集成react-router,并根据角色自动配置菜单和路由权限（权限在api中前端设置的测试数据）
-```
-```
 - 导航面包屑根据用户菜单自动获取，不在放到页面手动配置。
 - 集成redux(因为刚接触react不到一个月，redux还不是很上手，redux跟hooks的useReducer可能规整不是很好，导致只判断了userInfo.id不存在就跳转到登录页面)
 - 增加utils/pageState缓存页面状态全局变量工具，没有存储storage，刷新无效
