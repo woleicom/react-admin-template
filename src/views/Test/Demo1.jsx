@@ -5,7 +5,6 @@ import {setPageState,getPageState} from '@/utils/pageState'
 import addModal from './AddModal'
 
 const Demo = (props)=>{
-  console.log('init...');
   // 初始化默认筛选项数值
   let defSearch = {
     name1: '',
@@ -67,7 +66,8 @@ const Demo = (props)=>{
   // 页面筛选项重置
   const pageSearchReset = () => {
     form.current.setFields(Object.keys(defSearch).map(v=>({name:v, value: defSearch[v]})));
-    setSearch({...defSearch, page: 1, size: search.size});
+    // 重置后直接请求第一页数据
+    // setSearch({...defSearch, page: 1, size: search.size});
   }
   // 分页当前页切换
   const pageCurrentChange = (page, pageSize) => {
