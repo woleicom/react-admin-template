@@ -1,9 +1,10 @@
 import React,{ useRef, useState, useEffect} from 'react'
-import {Layout,Table,Card,Input,Form,Button,Pagination} from 'antd'
+import {Layout,Table,Card,Input,Form,Button,Pagination, message} from 'antd'
 import {withRouter} from 'react-router-dom';
 import {setPageState,getPageState} from '@/utils/pageState'
 import addModal from './AddModal'
-
+import {getList} from '@/api/demo'
+import {$iscode} from '@/utils/app'
 const Demo = (props)=>{
   // 初始化默认筛选项数值
   let defSearch = {
@@ -14,7 +15,7 @@ const Demo = (props)=>{
   }
   let form = useRef();
   // 初始化 分页信息和筛选项信息
-  let [total, setTotal] = useState(100);
+  let [total, setTotal] = useState(0);
   let [search,setSearch] = useState(defSearch);
   // 查看是否有留存状态，有则替换
   let pageState = getPageState(props.history.location.pathname);
@@ -23,6 +24,7 @@ const Demo = (props)=>{
   }
   // 列表数据和列头配置
   let [data, setData] = useState([])
+  let [listLoading, setListLoading] = useState(false);
   let columns = [
     {
       title: 'ID',
@@ -79,28 +81,25 @@ const Demo = (props)=>{
   }
   // 增加列表项模态框添加
   const actionAddModel = ()=>{
-    addModal({title: '添加'}).then(((res)=>{
-      if (res) {
-        res.id = data.length;
-        setData([res,...data])
-      }
-    }))
+    addModal({title: '添加'}).then((res)=>{
+      setData([res,...data.slice(0,-1)])
+    },()=>{})
   }
   // 初始化数据
-  const initData = () => {
-    console.log(search);
-    let d = [];
-    for(let i=(search.size*(search.page-1)+1);i<search.page*search.size;i++){
-      d.push( {
-        id: i,
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-      })
+  const initData = async () => {
+    setListLoading(true);
+    try {
+      let res = await getList(search);
+      setListLoading(false);
+      if ($iscode(res)) {
+        setData(res.data);
+        setTotal(res.total);
+      } else {
+        message.error(res.message)
+      }
+    } catch (e) {
+      setListLoading(false);
     }
-    setData(d);
-    setTotal(200);
   }
   useEffect(()=>{
     initData();
@@ -130,7 +129,12 @@ const Demo = (props)=>{
             <Button type="default" onClick={pageSearchReset}>重置</Button>
           </Form.Item>
         </Form>
-        <Table pagination={false} bordered rowKey='id' columns={columns} dataSource={data} />
+        <Table pagination={false} 
+          loading={listLoading}
+          bordered 
+          rowKey='id' 
+          columns={columns} 
+          dataSource={data} />
         <Pagination style={{marginTop:'10px',textAlign:'right'}} 
           showQuickJumper 
           current={search.page} 

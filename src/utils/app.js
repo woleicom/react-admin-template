@@ -4,7 +4,7 @@ export const $iscode = (res, isShowSussessMessage)=>{
     isShowSussessMessage && message.success(res.message);
     return true;
   } else {
-    message.error(res.message);
+    isShowSussessMessage && message.error(res.message);
     return false;
   }
 }

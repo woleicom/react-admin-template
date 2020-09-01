@@ -1,5 +1,7 @@
 import React, {Component, useEffect, useRef } from 'react'
 import { Modal,Form,Button,Input } from 'antd'
+import {addDemo} from '@/api/demo'
+import {$iscode} from '@/utils/app'
 const Index = (props) => {
   const form = useRef();
   const layout = {
@@ -66,9 +68,10 @@ const Index = (props) => {
   )
 }
 export default (props)=>{
-  let res;
+  let pro_res,pro_rej;
   let pro = new Promise((resolve, reject)=>{
-    res = resolve;
+    pro_res = resolve;
+    pro_rej = reject;
   });
   let form;
   const init = (f)=>{
@@ -86,17 +89,24 @@ export default (props)=>{
     icon: '',
     footer: null,
     onCancel: (close)=>{
-      res(false)
-      return pro
+      pro_rej(false)
+      close();
     },
     onOk: (close)=>{
       return new Promise((resolve,reject)=>{
         let data = form.getFieldsValue();
-        form.validateFields(Object.keys(data)).then((values)=>{
-          setTimeout(()=>{
-            resolve()
-            res(values)
-          }, 1500)
+        form.validateFields(Object.keys(data)).then(async (values)=>{
+          try {
+            let res = await addDemo(values);
+            if ($iscode(res, true)) {
+              pro_res(res.data)
+              resolve()
+            } else {
+              reject()
+            }
+          } catch(e) {
+            reject()
+          }
         }).catch((error)=>{
           reject()
           console.warn(error);
