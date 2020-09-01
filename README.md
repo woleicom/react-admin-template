@@ -1,6 +1,7 @@
 # react开发脚手架二次开发后台管理系统模板
 #### 简介： antd、国际化、router、redux、ui仿antd-admin-pro、动态路由、动态菜单权限、页面状态缓存
 ## 作者： 月下独奏
+### [更新日志](./note/updatelog.md)
 ##### 个人认为舒服的cli会提升开发的幸福度，所以部分习惯参考了vue-cli
 ##### 优化不易，喜欢可以star(因为兼容到IE10,start后启动较慢，耐心等待，可以在.babelrc和.browserslistrc和src/index.js中去掉兼容代码即可)
 ##### 如果喜欢vue建议直接选择vue element admin,已经做得很好了，不需要在二次开发了
@@ -26,7 +27,7 @@
 - 增加utils/pageState缓存页面状态全局变量工具，没有存储storage，刷新无效
 - 集成i18n国际化（使用react-intl集成国际化，导航头切换语言，首页查看效果）
 
-### 开发中兼容性
+### 开发中兼容性(IE兼容在单独IE分支，不在维护)
 - 兼容IE10、11默认关闭（通过注释src/index.js、.babelrc、.browserslistrc配置）
 - 兼容到IE11（通过babel兼容）
 - 兼容到IE10（pulic/index.html注释需要打开，因为在开发过程中create-react-app引入了一个只针对node环境的颜料库，导致在IE10中缺少相关函数对象，需要在全局静态配置polyfill，而在src中引入无效，如果只需要生产环境支持，则不需要，打包后会自动过滤掉，html中也根据是否development进行判断了）
