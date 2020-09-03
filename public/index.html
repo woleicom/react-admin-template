@@ -4,11 +4,6 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -16,27 +11,6 @@
     -->
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>React App</title>
-    <% if(process.env.NODE_ENV == "development"){ %>
-      <!--兼容IE10-->
-      <!--<script src="https://cdn.bootcss.com/es6-shim/0.35.5/es6-shim.min.js"></script>
-      <script>
-        (function(){
-          Object.setPrototypeOf = Object.setPrototypeOf || ({__proto__:[]} instanceof Array ? setProtoOf : mixinProperties);
-          function setProtoOf(obj, proto) {
-            obj.__proto__ = proto;
-            return obj;
-          }
-          function mixinProperties(obj, proto) {
-            for (var prop in proto) {
-              if (!obj.hasOwnProperty(prop)) {
-                obj[prop] = proto[prop];
-              }
-            }
-            return obj;
-          }
-        })();
-      </script>-->
-    <% } %> 
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
