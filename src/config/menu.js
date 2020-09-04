@@ -31,8 +31,8 @@ const menu = [
         icon: 'BarsOutlined',
         subs: [
             {
-                title: 'Demo1',
-                key: '/demo/demo1',
+                title: 'Demo',
+                key: '/demo/demo',
                 icon: '',
                 subs: [
                     {
