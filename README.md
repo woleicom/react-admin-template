@@ -43,6 +43,7 @@ npm run build:stag
 npm run build
 ```
 -------------
+##### 登录账号：admin/密码随便填 或 账号随便填/密码随便填  （两个账号权限不一样）
 ### 展示
 ![登录页](./note/react0.png)
 ![首页](./note/react1.png)
