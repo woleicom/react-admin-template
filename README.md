@@ -6,6 +6,10 @@
 ##### 如果喜欢vue建议参考项目:[woleicom/vue-admin-template](https://github.com/woleicom/vue-admin-template)
 ##### 如果喜欢vue建议直接选择vue element admin,已经做得很好了，不需要在二次开发了
 -----------
+### 感谢：
+- [React 16](https://reactjs.org/)
+- [Ant Design 4](https://ant.design/)
+-----------
 ### 优化内容（所有依赖库基于2020年第一季度最新包版本）
 - 用rescripts库重写create-react-app cli的webpack配置部分(配置更方便，可读性更好)
 - .rescripts配置rescripts配置
