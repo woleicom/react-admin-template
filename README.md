@@ -1,9 +1,9 @@
 # react开发脚手架二次开发后台管理系统模板
-#### 简介： antd、国际化、router、redux、ui仿antd-admin-pro、动态路由、动态菜单权限、页面状态缓存
+#### 简介： React 16.x、Ant Design 4.x、国际化、router、redux、ui仿antd-admin-pro、动态路由、动态菜单权限、页面状态缓存
 ## 作者： 月下独奏
 ### [更新日志](./note/updatelog.md)
 ##### 个人认为舒服的cli会提升开发的幸福度，所以部分习惯参考了vue-cli
-##### 优化不易，喜欢可以star(因为兼容到IE10,start后启动较慢，耐心等待，可以在.babelrc和.browserslistrc和src/index.js中去掉兼容代码即可)
+##### 如果喜欢vue建议参考项目:[woleicom/vue-admin-template](https://github.com/woleicom/vue-admin-template)
 ##### 如果喜欢vue建议直接选择vue element admin,已经做得很好了，不需要在二次开发了
 -----------
 ### 优化内容（所有依赖库基于2020年第一季度最新包版本）
@@ -34,7 +34,7 @@
 //启动前台服务
 npm run start
 //打包staging环境
-npm run build:prod
+npm run build:stag
 //打包正式环境
 npm run build
 ```
