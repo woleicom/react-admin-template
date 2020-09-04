@@ -59,7 +59,7 @@ const Demo = (props)=>{
   // 页面跳转
   const pageLinkChange = ()=>{
     setPageState(props.history.location.pathname,{...search})
-    props.history.push({ pathname : '/demo/demo1/detail' });
+    props.history.push({ pathname : '/demo/demo/detail' });
   }
   // 页面筛选项搜索
   const pageSearchChange = (data) => {

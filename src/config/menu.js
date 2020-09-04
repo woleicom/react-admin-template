@@ -37,7 +37,7 @@ const menu = [
                 subs: [
                     {
                         title: 'Detail',
-                        key: '/demo/demo1/detail',
+                        key: '/demo/demo/detail',
                         hidden: true
                     }
                 ]
