@@ -11,6 +11,10 @@ export const $iscode = (res, isShowSussessMessage)=>{
     isShowSussessMessage && message.success(res.message);
     return true;
   } else {
+    // if(res.code.toString().search('9') == 0) {
+    //   localStorage.removeItem('token');
+    //   __history.replace("/login");
+    // }
     isShowSussessMessage && message.error(res.message);
     return false;
   }

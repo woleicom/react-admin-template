@@ -2,7 +2,7 @@ import React, {useReducer} from 'react'
 import {Route, Switch, Redirect, withRouter} from 'react-router-dom'
 import { connect } from "react-redux";
 import {Layout, BackTop} from 'antd'
-import {$iscode} from '@/utils/app';
+import {$iscode,setHistory} from '@/utils/app';
 import routes from '@/routes'
 import avatar from '@/assets/images/user.png'
 import '@/style/layout.less'
@@ -70,7 +70,8 @@ const getBreadCrumb = (pathname,menuTree,crumb) => {
 };
 
 const DefaultLayout = props => {
-  
+  // 暴露history对象
+  setHistory(props.history);
   const [state, dispatch] = useReducer(reducer, {menuToggle: false});
 
   if (props.userInfo.id === undefined) {
